@@ -37,6 +37,7 @@ func matrix(Icol, Jcol, D []float64, octave_format bool) {
 
 	fmt.Println("I", I)
 	fmt.Println("J", J)
+	fmt.Println("D", D)
 
 	if octave_format {
 		fmt.Print("x=[")
@@ -58,7 +59,7 @@ func matrix(Icol, Jcol, D []float64, octave_format bool) {
 		fmt.Println("];")
 	}
 
-	var SENTINEL float64 = -123.456789 // quick and dirty hack
+	var SENTINEL float64 = -123.45678901234567 // quick and dirty hack
 
 	// (2) Make the "outer product" of the two index sets,
 	// spanning a matrix that can be index with each possible i,j pair
@@ -79,6 +80,8 @@ func matrix(Icol, Jcol, D []float64, octave_format bool) {
 	for i := range Icol {
 		matrix[Icol[i]][Jcol[i]] = D[i]
 	}
+
+	fmt.Println("matrix", matrix)
 
 	// (3.5)
 	// Missing data gets replaced by nearest value
