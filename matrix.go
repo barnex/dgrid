@@ -1,18 +1,16 @@
 package main
 
-import(
-		"fmt"
-		"os"
-		"math"
+import (
+	"fmt"
+	"os"
+	"math"
 )
-
 
 // Like Matrix() but outputs octave/matlab commands that set
 // x, y and data for use in surf(x,y,data)
 func Meshdom(x, y, data []float64) {
 	matrix(x, y, data, true)
 }
-
 
 // Assuming columns i,j contain matrix indices,
 // coutput column data in a correspondig 2D grid.
@@ -36,7 +34,6 @@ func matrix(Icol, Jcol, D []float64, octave_format bool) {
 		setJ.Add(Jcol[i])
 	}
 	J := setJ.ToArray()
-
 
 	if octave_format {
 		fmt.Print("x=[")
@@ -76,7 +73,7 @@ func matrix(Icol, Jcol, D []float64, octave_format bool) {
 	// (3) Loop over the i indices in the output and add the corrsponing data
 	// to the corresponding i,j position of the matrix. (j, data on the same line as i)
 	// Missing pairs keep 0. as data.
-	for i := range Icol{
+	for i := range Icol {
 		matrix[Icol[i]][Jcol[i]] = D[i]
 	}
 
@@ -129,7 +126,6 @@ func matrix(Icol, Jcol, D []float64, octave_format bool) {
 	}
 }
 
-
 func imin(a, b int) int {
 	if a < b {
 		return a
@@ -147,5 +143,3 @@ func imax(a, b int) int {
 func sqr(x float64) float64 {
 	return x * x
 }
-
-
