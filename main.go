@@ -20,3 +20,8 @@ func main() {
 		fmt.Println()
 	}
 }
+
+
+func debug(msg ...interface{}) {
+	fmt.Fprintln(os.Stderr, msg...)
+}

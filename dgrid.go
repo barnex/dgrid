@@ -1,28 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"os"
 )
 
-// Like Matrix() but outputs octave/matlab commands that set
-// x, y and data for use in surf(x,y,data)
-//func Meshdom(x, y, data []float64) {
-//	matrix(x, y, data, true)
-//}
 
-// Assuming columns i,j contain matrix indices,
-// coutput column data in a correspondig 2D grid.
-// Missing values become 0.
-//func Matrix(x, y, data []float64) {
-//	matrix(x, y, data, false)
-//}
-
-
-func debug(msg ...interface{}) {
-	fmt.Fprintln(os.Stderr, msg...)
-}
-
+// 3 columns contain x,y and data values.
+// Sorted, unique x and y indices are returned, which can serve as an "X-Y meshdom" for plotting,
+// The data matrix coresponds to x, y: data[i][j] belongs to co-ordinate x[i] y[j]
 func dgrid(Icol, Jcol, D []float64) (i, j []float64, data [][]float64) {
 
 	// (1) Construct a sorted set of unique i,j indices (floats).
@@ -164,4 +148,18 @@ func sqr(x float64) float64 {
 //}
 //if octave_format {
 //	fmt.Println("], ", len(J), ", ", len(I), ");")
+//}
+
+
+// Like Matrix() but outputs octave/matlab commands that set
+// x, y and data for use in surf(x,y,data)
+//func Meshdom(x, y, data []float64) {
+//	matrix(x, y, data, true)
+//}
+
+// Assuming columns i,j contain matrix indices,
+// coutput column data in a correspondig 2D grid.
+// Missing values become 0.
+//func Matrix(x, y, data []float64) {
+//	matrix(x, y, data, false)
 //}
