@@ -1,13 +1,14 @@
 package main
 
 import (
+	"math"
 )
-
 
 // 3 columns contain x,y and data values.
 // Sorted, unique x and y indices are returned, which can serve as an "X-Y meshdom" for plotting,
 // The data matrix coresponds to x, y: data[i][j] belongs to co-ordinate x[i] y[j]
-func dgrid(Icol, Jcol, D []float64) (i, j []float64, data [][]float64) {
+// if nearest > 0, missing values are  replaced by a nearest neighbor at most 'nearest' cells away.
+func dgrid(Icol, Jcol, D []float64, nearest int, missing float64) (i, j []float64, data [][]float64) {
 
 	// (1) Construct a sorted set of unique i,j indices (floats).
 	// This is the "meshdom", in matlab terms.
@@ -53,38 +54,42 @@ func dgrid(Icol, Jcol, D []float64) (i, j []float64, data [][]float64) {
 
 	// (3.5)
 	// Missing data gets replaced by nearest value
-	//DELTA := 5 // do not look further than DELTA neighbors 
-	//for i := range I {
-	//	for j := range J {
-	//		if matrix[I[i]][J[j]] == SENTINEL {
+	if nearest > 0 {
+		DELTA := nearest // do not look further than DELTA neighbors 
+		for i := range I {
+			for j := range J {
+				if matrix[I[i]][J[j]] == SENTINEL {
 
-	//			fmt.Fprintln(os.Stderr, "missing: ", i, j)
-	//			minDst := float64(math.Inf(1))
-	//			nearest := float64(0)
-	//			for i_ := imax(0, i-DELTA); i_ < imin(len(I), i+DELTA); i_++ {
-	//				for j_ := imax(0, j-DELTA); j_ < imin(len(J), j+DELTA); j_++ {
-	//					if matrix[I[i_]][J[j_]] != SENTINEL {
+					debug("missing: ", i, j)
+					minDst := float64(math.Inf(1))
+					nearestV := float64(0)
+					for i_ := imax(0, i-DELTA); i_ < imin(len(I), i+DELTA); i_++ {
+						for j_ := imax(0, j-DELTA); j_ < imin(len(J), j+DELTA); j_++ {
+							if matrix[I[i_]][J[j_]] != SENTINEL {
 
-	//						dst := sqr(I[i]-I[i_]) + sqr(J[j]-J[j_])
-	//						if dst < minDst {
-	//							minDst = dst
-	//							nearest = matrix[I[i_]][J[j_]]
-	//						}
+								dst := sqr(I[i]-I[i_]) + sqr(J[j]-J[j_])
+								if dst < minDst {
+									minDst = dst
+									nearestV = matrix[I[i_]][J[j_]]
+								}
 
-	//					}
-	//				}
-	//			}
-	//			matrix[I[i]][J[j]] = nearest
-
-	//		}
-	//	}
-	//}
+							}
+						}
+					}
+					matrix[I[i]][J[j]] = nearestV
+				}
+			}
+		}
+	}
 
 	data = make([][]float64, len(I))
 	for i := range I {
 		data[i] = make([]float64, len(J))
 		for j := range J {
 			data[i][j] = matrix[I[i]][J[j]]
+			if data[i][j] == SENTINEL{
+				data[i][j] = missing
+			}
 		}
 	}
 	i = I
@@ -149,7 +154,6 @@ func sqr(x float64) float64 {
 //if octave_format {
 //	fmt.Println("], ", len(J), ", ", len(I), ");")
 //}
-
 
 // Like Matrix() but outputs octave/matlab commands that set
 // x, y and data for use in surf(x,y,data)
