@@ -12,22 +12,22 @@ import (
 func ReadArray(in io.Reader) (data [][]float64) {
 	bytes, err := ioutil.ReadAll(in)
 	Check(err)
+	data = make([][]float64, 3)
 	str := string(bytes)
 	lines := strings.Split(str, "\n")
 	for _, l := range lines {
-		var numbers []float64
+			i:=0
 		words1 := strings.Split(l, "\t")
 		for _, w1 := range words1 {
 			words := strings.Split(w1, " ")
 			for _, w := range words {
 				if len(w) > 0 {
-					numbers = append(numbers, atof(w))
+					data[i] = append(data[i], atof(w))
+					i++
 				}
 			}
 		}
-		if numbers != nil && len(numbers) > 0 {
-			data = append(data, numbers)
-		}
+		if i != 0 && i != 3 {panic(l)}
 	}
 	fmt.Println("numbers:", data)
 	return

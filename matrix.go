@@ -24,16 +24,19 @@ func matrix(Icol, Jcol, D []float64, octave_format bool) {
 	// (1) Construct a sorted set of unique i,j indices (floats).
 	// This is the "meshdom", in matlab terms.
 	setI := MakeSet()
-	for i := range Icol {
-		setI.Add(Icol[i])
+	for _,i := range Icol {
+		setI.Add(i)
 	}
 	I := setI.ToArray()
 
 	setJ := MakeSet()
-	for i := range Jcol {
-		setJ.Add(Jcol[i])
+	for _,j := range Jcol {
+		setJ.Add(j)
 	}
 	J := setJ.ToArray()
+
+	fmt.Println("I", I)
+	fmt.Println("J", J)
 
 	if octave_format {
 		fmt.Print("x=[")
