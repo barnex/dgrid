@@ -16,7 +16,7 @@ func ReadArray(in io.Reader) (data [][]float64) {
 	str := string(bytes)
 	lines := strings.Split(str, "\n")
 	for _, l := range lines {
-			i:=0
+		i := 0
 		words1 := strings.Split(l, "\t")
 		for _, w1 := range words1 {
 			words := strings.Split(w1, " ")
@@ -27,7 +27,9 @@ func ReadArray(in io.Reader) (data [][]float64) {
 				}
 			}
 		}
-		if i != 0 && i != 3 {panic(l)}
+		if i != 0 && i != 3 {
+			panic(l)
+		}
 	}
 	fmt.Println("numbers:", data)
 	return
