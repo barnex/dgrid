@@ -8,9 +8,16 @@ import (
 	"os"
 )
 
-func ReadArray(in io.Reader) (data [][]float64) {
+
+
+// Reads a 3-column array of ascii numbers:
+//	1.0 2.0 3.0
+//	4.0 5.0 6.0
+//	7.0 8.0 9.0
+// 	...
+func read3columns(in io.Reader) (data [][]float64) {
 	bytes, err := ioutil.ReadAll(in)
-	Check(err)
+	check(err)
 	data = make([][]float64, 3)
 	str := string(bytes)
 	lines := strings.Split(str, "\n")
@@ -34,14 +41,16 @@ func ReadArray(in io.Reader) (data [][]float64) {
 	return
 }
 
-func Check(err os.Error) {
+// panics if err != nil
+func check(err os.Error) {
 	if err != nil {
 		panic(err)
 	}
 }
 
+// atof which panics on error
 func atof(str string) float64 {
 	f, err := strconv.Atof64(str)
-	Check(err)
+	check(err)
 	return f
 }
