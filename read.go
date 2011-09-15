@@ -6,7 +6,6 @@ import (
 	"strings"
 	"strconv"
 	"os"
-	"fmt"
 )
 
 func ReadArray(in io.Reader) (data [][]float64) {
@@ -31,7 +30,7 @@ func ReadArray(in io.Reader) (data [][]float64) {
 			panic(l)
 		}
 	}
-	fmt.Println("numbers:", data)
+	//debug("numbers:", data)
 	return
 }
 
