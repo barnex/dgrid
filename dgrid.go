@@ -67,7 +67,7 @@ func dgrid(Icol, Jcol, D []float64, nearest int, missing float64) (i, j []float6
 						for j_ := imax(0, j-DELTA); j_ < imin(len(J), j+DELTA); j_++ {
 							if matrix[I[i_]][J[j_]] != SENTINEL {
 
-								dst := sqr(I[i]-I[i_]) + sqr(J[j]-J[j_])
+								dst := sqr(i-i_) + sqr(j-j_) // search for the nearest cell
 								if dst < minDst {
 									minDst = dst
 									nearestV = matrix[I[i_]][J[j_]]
@@ -112,8 +112,8 @@ func imax(a, b int) int {
 	return b
 }
 
-func sqr(x float64) float64 {
-	return x * x
+func sqr(x int) float64 {
+	return float64(x) * float64(x)
 }
 
 //	if octave_format {
