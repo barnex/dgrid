@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
-	"os"
-	"io"
 	"fmt"
+	"io"
+	"os"
 )
 
 var flag_nearest *int = flag.Int("nearest", 0, "Missing values get replaced by their nearest neighbor value at most this many cells away")
@@ -18,7 +18,7 @@ func main() {
 		in = os.Stdin
 	} else {
 		fname := flag.Args()[0]
-		var err os.Error
+		var err error
 		in, err = os.Open(fname)
 		check(err)
 	}

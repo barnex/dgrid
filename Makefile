@@ -1,9 +1,5 @@
-include $(GOROOT)/src/Make.inc
+all: dgrid
 
-main:*.go
-	$(GC) -I_obj *.go
-	$(LD) -L_obj -o dgrid *.$O
-
-.PHONY:	clean
-clean:
-	rm -f  main *.a *.$O $(CLEANFILES)
+dgrid: *.go
+	go tool 6g -o dgrid.6 *.go
+	go tool 6l -o dgrid dgrid.6

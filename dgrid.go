@@ -87,7 +87,7 @@ func dgrid(Icol, Jcol, D []float64, nearest int, missing float64) (i, j []float6
 		data[i] = make([]float64, len(J))
 		for j := range J {
 			data[i][j] = matrix[I[i]][J[j]]
-			if data[i][j] == SENTINEL{
+			if data[i][j] == SENTINEL {
 				data[i][j] = missing
 			}
 		}
