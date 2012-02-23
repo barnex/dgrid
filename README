@@ -2,6 +2,9 @@ dgrid processes data for easy use with gnuplot's "splot" command.
 
 dgrid's input is a list with 3 columns: x, y, value. The output is this data ordered so that gnuplot can make a 3D splot: the output data is sorted, newlines are inserted where needed and the data is on a structured grid (even if the input was unstructured). When the input is unstructured, or structured but with missing points, the missing data is replaced by the nearest neighbor value.
 
+typical usage:
+splot '<dgrid messydata.txt' with pm3d
+
 Copyright (c) Arne Vansteenkiste <barnex@gmail.com>
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
